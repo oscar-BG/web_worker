@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Contador: <span id="contador"></span> </p>
+    <button onclick="iniciarContador()">Iniciar contador</button>
+    <button onclick="detenerContador()">Detener contador</button>
+    <br>
+    <a href="paginas2.html">Visitar la pagina 2</a>
+    <br>
+
+    <button onclick="ventana()">Sumar</button>
+    <span id="result"></span>
+
+
+    <script>
+        let workerContador;
+
+        document.addEventListener('deviceready', onDeviceReady, false);
+
+        function onDeviceReady() {
+            console.log("Iniciar");
+            workerContador = new Worker('./wor.js');
+
+            workerContador.onmessage = function(evento) {
+                document.getElementById('contador').innerText = evento.data;
+
+            }
+        }
+
+        function iniciarContador() {
+            console.log("Iniciar");
+            workerContador = new Worker('./wor.js');
+
+            workerContador.onmessage = function(evento) {
+                document.getElementById('contador').innerText = evento.data;
+
+            }
+            
+        }
+
+        function detenerContador() {
+            workerContador.terminate();
+        }
+        window.addEventListener('load', () => {
+            console.log("Inicio");
+            workerContador = new Worker('./wor.js');
+
+            workerContador.onmessage = function(evento) {
+                document.getElementById('contador').innerText = evento.data;
+
+            }
+        })
+
+        function ventana() {
+            let num1 = +prompt("num1")
+            let num2 = +prompt("num2")
+
+            let suma = num1 + num2;
+
+            document.getElementById('result').innerText = suma;
+        }
+    </script>
+</body>
+</html>
